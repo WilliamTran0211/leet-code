@@ -1,3 +1,5 @@
+'''2225. Find Players With Zero or One Losses
+'''
 class Solution(object):
     def findWinners(self, matches):
         """
