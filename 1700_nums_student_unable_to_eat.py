@@ -43,25 +43,31 @@ from typing import List
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
 
-        student_set = set(students)
-        sandwich_set = set(sandwiches)
-
         while True:
-            if len(students) != 0 or len(sandwiches) != 0:
-                if (
-                    len(student_set - sandwich_set) == 0
-                    or len(sandwich_set - student_set) == 0
-                ):
-                    if students[0] != sandwiches[0]:
-                        pop = students.pop(0)
-                        students.append(pop)
-                        student_set = set(students)
-                    else:
-                        students.pop(0)
-                        sandwiches.pop(0)
-                        student_set = set(students)
-                        sandwich_set = set(sandwiches)
+            if len(students) != 0:
+                if students[0] != sandwiches[0]:
+                    pop = students.pop(0)
+                    students.append(pop)
+                else:
+                    students.pop(0)
+                    sandwiches.pop(0)
 
+                set_student = set(students)
+                set_sandwich = set(sandwiches)
+
+                if len(set_student) == 1 and len(set_student) < len(set_sandwich):
+                    check_student = students[0]
+                    check_sandwich = sandwiches[0]
+
+                    if check_student != check_sandwich:
+                        break
+
+                if (
+                    len(set_student) == 1
+                    and len(set_sandwich) == 1
+                    and students[0] != sandwiches[0]
+                ):
+                    break
             else:
                 break
         return len(students)
@@ -74,9 +80,9 @@ sandwiches = [0, 1, 0, 1]
 print("ans: ", sol.countStudents(students, sandwiches))
 
 
-# students = [1, 1, 1, 0, 0, 1]
-# sandwiches = [1, 0, 0, 0, 1, 1]
-# print("ans: ", sol.countStudents(students, sandwiches))
+students = [1, 1, 1, 0, 0, 1]
+sandwiches = [1, 0, 0, 0, 1, 1]
+print("ans: ", sol.countStudents(students, sandwiches))
 
 
 students = [0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1]
