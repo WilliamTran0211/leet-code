@@ -86,6 +86,7 @@ def grow_a_tree(root_list: List[int], i=0) -> Optional[TreeNode]:
 
 
 def grow_a_tree_from_list(root_lst: List[int]) -> Optional[TreeNode]:
+    # this is better because it dont create node with None value
     root_node = TreeNode(val=root_lst[0])
     nodes = [root_node]
     for i, val in enumerate(root_lst[1:]):
@@ -106,34 +107,30 @@ def grow_a_tree_from_list(root_lst: List[int]) -> Optional[TreeNode]:
 class Solution:
     def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
 
-        count = 0
-
         res = []
 
-        def get_left_leaf(res, root):
+        def get_left_leaf(res, root, is_left=False):
             if root:
-                print(root.val)
-                if root.left:
-                    get_left_leaf(res, root.left)
-                if root.right:
+                if root.left and root.left.val is not None:
+                    get_left_leaf(res, root.left, is_left=True)
+                if root.right and root.right.val is not None:
                     get_left_leaf(res, root.right)
-
-                if root.left is None and root.right is None:
-                    return res.append(root.val)
+                if root.left is None and root.right is None and is_left == True:
+                    res.append(root.val)
 
         get_left_leaf(res, root)
-        print(res)
 
-        return 0
+        return sum(res)
 
 
 sol = Solution()
 
 list_root = [3, 9, 20, None, None, 15, 7]
-root = grow_a_tree(list_root)
+root = grow_a_tree_from_list(list_root)
+print(root)
 print("Ans: ", sol.sumOfLeftLeaves(root))
 
 
-list_root = [3, 9, 20, 4, 2, 3, 1, None, None, None, None, 12, 4, 15, 7, 6]
-root = grow_a_tree(list_root)
-print("Ans: ", sol.sumOfLeftLeaves(root))
+# list_root = [3, 9, 20, 4, 2, 3, 1, None, None, None, None, 12, 4, 15, 7, 6]
+# root = grow_a_tree(list_root)
+# print("Ans: ", sol.sumOfLeftLeaves(root))
