@@ -82,23 +82,15 @@ class Solution:
             if root:
                 nonlocal count_deep
                 tmp.append(str(root.val))
-                print(tmp)
                 if root.left and root.left.val is not None:
                     get_numbers(his, root.left, tmp, is_left=True)
-                    count_deep += 1
                 if root.right and root.right.val is not None:
                     get_numbers(his, root.right, tmp, is_left=False)
-                    count_deep += 1
-                if root.left is None and root.right is None:
-                    print(tmp, count_deep, len(tmp), len(tmp) - 1 - count_deep)
+                elif root.left is None and root.right is None:
                     his.append(int("".join(tmp)))
-                    tmp = tmp[: len(tmp) - 1 - count_deep]
-                    print("final", tmp)
 
-        get_numbers(his, root, tmp=[], is_left=False)
-
+                tmp.pop(-1)
         return sum(his)
-
 
 sol = Solution()
 root_lst = [1, 2, 3]
@@ -106,7 +98,7 @@ root = grow_a_tree_from_list(root_lst)
 print("ans: ", sol.sumNumbers(root))
 
 
-root_lst = [4, 9, 0, 5, 1, 5, 2]
+root_lst = [4, 9, 0, 5, 1]
 root = grow_a_tree_from_list(root_lst)
 print("ans: ", sol.sumNumbers(root))
 
