@@ -76,21 +76,19 @@ def grow_a_tree_from_list(root_lst: List[int]) -> Optional[TreeNode]:
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
         his = []
-        count_deep = 0
-
         def get_numbers(his, root, tmp, is_left=False):
             if root:
-                nonlocal count_deep
                 tmp.append(str(root.val))
                 if root.left and root.left.val is not None:
                     get_numbers(his, root.left, tmp, is_left=True)
                 if root.right and root.right.val is not None:
                     get_numbers(his, root.right, tmp, is_left=False)
-                elif root.left is None and root.right is None:
+                if root.left is None and root.right is None:
                     his.append(int("".join(tmp)))
-
                 tmp.pop(-1)
+        get_numbers(his, root, tmp=[], is_left=False)
         return sum(his)
+
 
 sol = Solution()
 root_lst = [1, 2, 3]
