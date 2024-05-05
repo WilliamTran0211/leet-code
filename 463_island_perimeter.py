@@ -25,8 +25,15 @@ class Solution:
                 current = grid[i][j]
 
                 print(current)
-                # if current == 1:
-                #     print("found land")
+
+                left = None
+                right = None
+                up = None
+                down = None
+
+                if j > 0:
+                    left = 0
+
             print()
 
         return 1
