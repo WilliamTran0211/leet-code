@@ -55,9 +55,17 @@ class Solution:
 
                     if len(tmp) < k:
                         heapq.heappush(tmp, zip)
-                    elif tmp[0][0] > fraction:
-                        heapq.heappop(tmp)
-                        heapq.heappush(tmp, zip)
+                    else:
+                        print(tmp)
+
+                        check = heapq.heappop(tmp)
+                        print(zip, check[0], check[0] > fraction)
+
+                        if check[0] > fraction:
+                            heapq.heappop(tmp)
+                            heapq.heappush(tmp, zip)
+                        else:
+                            heapq.heappush(tmp, check)
 
                 tmp = sorted(tmp, key=lambda x: x[0], reverse=True)
 
