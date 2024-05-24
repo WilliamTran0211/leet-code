@@ -32,13 +32,35 @@ Explanation: We pay 4 to 0th worker, 13.33333 to 2nd and 3rd workers separately.
 """
 
 from typing import List
+import heapq
 
 
 class Solution:
     def minCostToHireWorkers(
         self, quality: List[int], wage: List[int], k: int
     ) -> float:
-        return 0.0
+        res = float("inf")
+        pairs = []  # (ratio, quality)
+
+        for i in range(len(quality)):
+            pairs.append((wage[i] / quality[i], quality[i]))
+        pairs.sort(key=lambda p: p[0])
+
+        maxHeap = []
+
+        total_quality = 0
+
+        for rate, q in pairs:
+            heapq.heappush(maxHeap, -q)
+            total_quality += q
+
+            if len(maxHeap) > k:
+                total_quality += heapq.heappop(maxHeap)
+
+            if len(maxHeap) == k:
+                res = min(res, total_quality * rate)
+
+        return res
 
 
 sol = Solution()

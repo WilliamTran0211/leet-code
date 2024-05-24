@@ -24,7 +24,6 @@ Output: [1,7]
 
 lấy số arr thứ i chia số arr thứ j với i < j < len(arr) chọn số nhỏ thứ K 
 
-
 """
 
 from typing import List
@@ -36,42 +35,33 @@ class Solution:
         if len(arr) == 2:
             return arr
         else:
+            # this is correct but it gonna take a lot of time
+            # tmp = []
+            # for i in range(len(arr) - 1):
+            #     for j in range(i + 1, len(arr)):
+            #         fraction = float(arr[i] / arr[j])
+            #         zip = (fraction, [arr[i], arr[j]])
+            #         heapq.heappush(tmp, zip)
+            #             if len(tmp) < k:
+            #                 tmp.append(zip)
+            #             elif tmp[0][0] > faction:
+            #                 tmp.pop(0)
+            #                 tmp.append(zip)
+
+            #             tmp = sorted(tmp, key=lambda x: x[0], reverse=True)
+            #     res = tmp.pop(abs(k - len(tmp)))[1]
+
             tmp = []
             for i in range(len(arr) - 1):
                 for j in range(i + 1, len(arr)):
                     fraction = float(arr[i] / arr[j])
-
                     zip = (fraction, [arr[i], arr[j]])
-
-                    # this is correct but it gonna take a lot of time
-                    #         if len(tmp) < k:
-                    #             tmp.append(zip)
-                    #         elif tmp[0][0] > faction:
-                    #             tmp.pop(0)
-                    #             tmp.append(zip)
-
-                    #         tmp = sorted(tmp, key=lambda x: x[0], reverse=True)
-                    # res = tmp.pop(abs(k - len(tmp)))[1]
-
-                    if len(tmp) < k:
-                        heapq.heappush(tmp, zip)
-                    else:
-                        print(tmp)
-
-                        check = heapq.heappop(tmp)
-                        print(zip, check[0], check[0] > fraction)
-
-                        if check[0] > fraction:
-                            heapq.heappop(tmp)
-                            heapq.heappush(tmp, zip)
-                        else:
-                            heapq.heappush(tmp, check)
-
-                tmp = sorted(tmp, key=lambda x: x[0], reverse=True)
-
-            print(tmp)
-            res = heapq.heappop(tmp)[1]
-
+                    heapq.heappush(tmp, zip)
+            res = []
+            for i in range(k):
+                res = heapq.heappop(tmp)[1]
+                if i == k - 1:
+                    break
         return res
 
 
@@ -79,9 +69,11 @@ sol = Solution()
 arr, k = [1, 2, 3, 5], 3
 print("ans: ", sol.kthSmallestPrimeFraction(arr, k))
 
-
-arr, k = [1, 7, 23, 29, 47], 8
+arr, k = [1, 13, 17, 59], 6
 print("ans: ", sol.kthSmallestPrimeFraction(arr, k))
+
+# arr, k = [1, 7, 23, 29, 47], 8
+# print("ans: ", sol.kthSmallestPrimeFraction(arr, k))
 
 # arr = [
 #     1,
