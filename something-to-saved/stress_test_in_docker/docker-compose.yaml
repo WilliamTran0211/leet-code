@@ -1,0 +1,16 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stress_test_container
+    ports:
+      - 5050:5050
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1.5G
+        reservations:
+          cpus: '0.25'
+          memory: 1G
